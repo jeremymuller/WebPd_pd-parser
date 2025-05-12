@@ -74,7 +74,7 @@ export declare namespace PdJson {
         rootPatchId: GlobalId
     }
 
-    // ----------------------------- PdArray ----------------------------- //
+    // ----------------------------- PdArray & object version ----------------------------- //
     interface ArrayLayout {
         drawAs?: 'polygon' | 'points' | 'bezier'
     }
@@ -89,9 +89,16 @@ export declare namespace PdJson {
          * [arrayName, arraySize, saveContents]
          * - arraySize can be a dollar-string
          */
-        args: [string, number | string, 0 | 1]
+        args: [string | null, number | string | null, 0 | 1]
 
-        layout: ArrayLayout
+        layout?: ArrayLayout | null
+    }
+
+    interface PdArrayObject extends PdArray {
+
+        objectType: string
+
+        flagOptions: Array<string> | null
     }
 
     // ----------------------------- Patch ----------------------------- //

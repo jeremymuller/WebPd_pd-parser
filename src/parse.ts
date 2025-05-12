@@ -21,6 +21,7 @@
 import { parseFloatToken, parseStringToken, ValueError } from './tokens'
 import {
     hydrateArray,
+    hydrateArrayObject,
     hydrateConnection,
     hydrateNodeArray,
     hydrateNodeBase,
@@ -311,6 +312,18 @@ const _parseArrays = (c: Compilation, patchId: PdJson.GlobalId): void => {
                 })
 
                 // array data to add to the current array
+            } else if (_tokensMatch(tokens, '#X', 'obj', tokens[2]!, tokens[3]!, 'array', 'define')) {
+                currentArray = hydrateArrayObject(
+                    nextArrayId(), 
+                    patchTokenizedLines.shift()!
+                );
+
+                c.pd.arrays[currentArray.id] = currentArray;
+                remainingTokenizedLines.push({
+                    tokens: ['ARRAY', currentArray.id],
+                    lineAfterComma: [],
+                    lineIndex,
+                });
             } else if (_tokensMatch(tokens, '#A')) {
                 if (!currentArray) {
                     throw new Error(

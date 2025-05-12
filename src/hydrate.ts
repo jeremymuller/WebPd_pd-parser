@@ -101,6 +101,58 @@ export const hydrateArray = (
     }
 }
 
+export const hydrateArrayObject = (
+    id: PdJson.GlobalId,
+    { tokens }: TokenizedLine
+): PdJson.PdArrayObject => {
+    const objType = parseStringToken(tokens[5]);
+    
+    // TODO
+    const flags: string[] = ['-k', '-yrange', '-pix'];
+
+    let flagOptions: string[] = [];
+
+    let flag = 0;
+    let saveContents = 0 as 1 | 0;
+    
+    if (tokens.includes(flags[0]!)) {
+        flag += 1;
+        saveContents = 1 as 1 | 0;
+        flagOptions!.push(parseStringToken(flags[0]));
+    }
+    if (tokens.includes(flags[1]!)) {
+        // -yrange, add these options
+        flag += 3;
+        flagOptions.push(parseStringToken(flags[1]));
+    }
+    if (tokens.includes(flags[2]!)) {
+        // -pix thing
+        flag += 3;
+        flagOptions.push(parseStringToken(flags[2]));
+    }
+
+    // TODO: add some error checking if an optional array name was given
+    let arrayName = null;
+    if (tokens[6+flag] != null) {
+        arrayName = parseStringToken(tokens[6+flag]);
+    }
+    let arraySize = null;
+    if (tokens[7+flag] != null) {
+        arraySize = parseArg(tokens[7+flag]);
+    }
+
+    // TODO: need to add object name as possibility like this:
+    // objName: objName
+    // also options: 
+    return {
+        id,
+        args: [arrayName, arraySize, saveContents],
+        data: null,
+        objectType: objType,
+        flagOptions: flagOptions
+    };
+}
+
 export const hydrateNodePatch = (
     id: PdJson.LocalId,
     { tokens }: TokenizedLine
