@@ -311,7 +311,7 @@ const _parseArrays = (c: Compilation, patchId: PdJson.GlobalId): void => {
                     lineIndex,
                 })
 
-                // array data to add to the current array
+            // array data to add to the current array
             } else if (_tokensMatch(tokens, '#X', 'obj', tokens[2]!, tokens[3]!, 'array', 'define')) {
                 currentArray = hydrateArrayObject(
                     nextArrayId(), 

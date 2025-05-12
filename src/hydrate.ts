@@ -107,7 +107,6 @@ export const hydrateArrayObject = (
 ): PdJson.PdArrayObject => {
     const objType = parseStringToken(tokens[5]);
     
-    // TODO
     const flags: string[] = ['-k', '-yrange', '-pix'];
 
     let flagOptions: string[] = [];
@@ -121,7 +120,7 @@ export const hydrateArrayObject = (
         flagOptions!.push(parseStringToken(flags[0]));
     }
     if (tokens.includes(flags[1]!)) {
-        // -yrange, add these options
+        // -yrange
         flag += 3;
         flagOptions.push(parseStringToken(flags[1]));
     }
@@ -131,7 +130,7 @@ export const hydrateArrayObject = (
         flagOptions.push(parseStringToken(flags[2]));
     }
 
-    // TODO: add some error checking if an optional array name was given
+    // error checking if an optional array name was given
     let arrayName = null;
     if (tokens[6+flag] != null) {
         arrayName = parseStringToken(tokens[6+flag]);
@@ -141,9 +140,6 @@ export const hydrateArrayObject = (
         arraySize = parseArg(tokens[7+flag]);
     }
 
-    // TODO: need to add object name as possibility like this:
-    // objName: objName
-    // also options: 
     return {
         id,
         args: [arrayName, arraySize, saveContents],
