@@ -29,8 +29,5 @@
     "homepage": "https://github.com/sebpiq/WebPd_pd-parser#readme",
     "devDependencies": {
         "@webpd/dev": "github:sebpiq/WebPd_dev#v1"
-    },
-    "dependencies": {
-        "@webpd/pd-parser": "^1.0.0"
     }
 }
